@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: secured
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: lc-db
+      
+
+security.enable-csrf: false
+
+server:
+    servlet:
+      context-path: /api/sample/v1
+    port : 5010
+
+
+svcErrorPrefix: "lc.sample.svc."
+name.regex.pattern: ^[A-Za-z0-9]+$
+minAge: 20
+company.regex.pattern: example.com|sample.com

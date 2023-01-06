@@ -1,0 +1,84 @@
+/*
+buildscript {
+    dependencies {
+        classpath 'org.owasp:dependency-check-gradle:7.1.1'
+    }
+}
+*/
+
+plugins {
+	id 'org.springframework.boot' version '2.7.2'
+	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+	id 'java'
+	id 'java-library'
+    id 'com.github.sherter.google-java-format' version '0.8'
+    id "org.owasp.dependencycheck" version "7.1.1"
+}
+
+repositories {
+	mavenCentral()
+}
+	
+group = 'com.sample'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+googleJavaFormat {
+	options style: 'AOSP'
+}
+
+//verifyGoogleJavaFormat.dependsOn(tasks.googleJavaFormat)
+
+build.dependsOn(tasks.googleJavaFormat)
+verifyGoogleJavaFormat.mustRunAfter(tasks.googleJavaFormat)
+
+tasks.jar {
+    enabled = true
+    // Remove `plain` postfix from jar file name
+    archiveClassifier.set("")
+}
+
+ext {
+	mongoJavaDriverVersion='3.12.11'
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+    implementation 'org.springframework.boot:spring-boot-starter-tomcat'
+    
+    implementation 'org.springframework.data:spring-data-commons'
+    implementation 'org.springframework.security:spring-security-web'
+	implementation 'org.springframework.security:spring-security-config'
+	implementation 'org.springframework.security:spring-security-crypto'
+	implementation 'org.springframework.security:spring-security-core'
+	
+	compileOnly 'org.projectlombok:lombok:1.18.24'
+	annotationProcessor 'org.projectlombok:lombok:1.18.24'
+	
+	//implementation group: 'org.mongodb', name: 'mongo-java-driver', version: mongoJavaDriverVersion
+	
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.13.3'
+	implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
+	implementation group: 'org.json', name: 'json', version: '20220320'
+	
+	implementation 'org.apache.logging.log4j:log4j-to-slf4j:2.18.0'
+	implementation 'org.apache.logging.log4j:log4j-api:2.18.0'
+	
+	//implementation 'org.mongodb:mongo-java-driver:3.12.11'
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.7.2'
+	implementation 'org.mongodb:mongodb-crypt:1.5.2'
+	
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
