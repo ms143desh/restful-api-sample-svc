@@ -1,5 +1,5 @@
 # restful-api-sample-svc
-Sample repository for Restfull API service
+Sample repository for Restful API service
 
 ## code build command
 code build = ./gradlew clean build
